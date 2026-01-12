@@ -1,4 +1,4 @@
-Dưới đây là toàn bộ nội dung **đã được định dạng sẵn dưới dạng Markdown thuần**, bạn chỉ cần **bôi đen toàn bộ → copy → dán vào file `.md` trên máy hoặc trực tiếp lên GitHub**.
+Dưới đây là phiên bản **Markdown (.md)** đầy đủ, chi tiết, dễ hiểu — được viết như một **tài liệu kỹ thuật chuyên nghiệp**, phù hợp để bạn lưu vào repo GitHub hoặc dùng làm tài liệu tham khảo khi đi làm.
 
 ---
 
@@ -188,10 +188,7 @@ export class CommentService {
 
   async createCommentWithSideEffects(postId: string, data: any) {
     const comment = await this.commentRepo.create({...data, postId});
-    const post = await this.postRepo.findById(postId);
-    await this.postRepo.updateById(postId, {
-      commentCount: (post.commentCount || 0) + 1,
-    });
+    await this.postRepo.updateById(postId, {commentCount: +1});
     return comment;
   }
 }
@@ -307,3 +304,20 @@ postId: string;
 📅 **Cập nhật**: January 2026  
 🔗 **Dành cho**: Dự án sử dụng LoopBack 4 + Elasticsearch
 ```
+
+---
+
+### ✅ Cách sử dụng
+
+1. Lưu nội dung trên vào file: `loopback4-elasticsearch-guide.md`
+2. Đẩy lên GitHub repo của bạn:
+   ```bash
+   git add loopback4-elasticsearch-guide.md
+   git commit -m "docs: add LoopBack 4 + ES guide"
+   git push
+   ```
+3. GitHub sẽ tự render Markdown → đẹp, rõ ràng, dễ đọc.
+
+---
+
+Chúc bạn làm việc hiệu quả và sớm trở thành **senior backend engineer**! Nếu cần cập nhật hoặc mở rộng tài liệu (ví dụ: thêm phần testing, deployment, security...), cứ nói nhé 😊
