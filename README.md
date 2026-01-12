@@ -226,6 +226,40 @@ postId: string;
 
 ---
 
-Bạn có thể sao chép toàn bộ nội dung này vào file Markdown (`.md`) hoặc Word để làm tài liệu nội bộ. Nếu cần phiên bản PDF hoặc định dạng khác, mình cũng có thể hỗ trợ!
+## 🧪 Hiển thị JSON mẫu trực tiếp trên Swagger UI
 
-Chúc bạn làm việc hiệu quả với LoopBack 4 và Elasticsearch tại Athena AI! 🚀
+Để giúp người dùng/tester **test API ngay trên Swagger mà không cần tra tài liệu**, bạn có thể **thêm JSON mẫu (example body)** vào decorator `@requestBody`. Swagger UI sẽ tự động điền giá trị này khi nhấn "Try it out".
+
+### Cách làm
+
+Thêm thuộc tính `example` trong phần `content` của `@requestBody`:
+
+```ts
+@post('/posts/{postId}/comments')
+async createComment(
+  @param.path.string('postId') postId: string,
+  @requestBody({
+    description: 'The comment to create',
+    required: true,
+    content: {
+      'application/json': {
+        schema: {
+          type: 'object',
+          required: ['content', 'authorId'],
+          properties: {
+            content: { type: 'string' },
+            authorId: { type: 'string' },
+          },
+        },
+        // 👇 THÊM JSON MẪU Ở ĐÂY
+        example: {
+          content: 'This is a great post!',
+          authorId: 'user_123'
+        }
+      },
+    },
+  })
+  commentData: Omit<EsComment, 'id' | 'postId' | 'createdAt'>,
+) {
+  // ...
+}
